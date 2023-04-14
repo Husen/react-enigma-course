@@ -20,8 +20,9 @@ const AddCourse = () => {
     <StyledContainer>
         <StyledTitle>Add Course</StyledTitle>
         <Form>
-            { FORM_LIST.map(item => (
-                <FormInput 
+            { FORM_LIST.map((item, index) => (
+                <FormInput
+                    key={index} 
                     label={item.label}
                     type={item.type}
                     value={getter[item.id]}
