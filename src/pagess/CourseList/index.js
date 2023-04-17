@@ -31,6 +31,7 @@ const ListItem = (props) => {
 
 const CourseList = (props) => {
     const {courses, onNavigate} = props
+    console.log(courses)
     return (
         <>
             <Container>

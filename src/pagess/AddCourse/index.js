@@ -13,16 +13,32 @@ const FORM_LIST = [
     { id: "duration", label: "Duration", type: "text", placeholder: "Enter course duration" }
 ]
 
+
+
 const AddCourse = (props) => {
     const { getter, setter } = useAddCourseState()
-    // const {onNavigate} = props
+
+    const handleSubmit = (event) =>  {
+        event.preventDefault()
+        const newCourse = {
+            title: getter.title,
+            description: getter.description,
+            typeId: getter.typeId,
+            courseFile: getter.courseFile,
+            level: getter.level,
+            duration: getter.duration
+        }
+        props.addCourse(newCourse)
+        props.onNavigate("/")
+    }
 
   return (
     <StyledContainer>
         <StyledTitle>Add Course</StyledTitle>
-        <Form>
+        <Form onSubmit={handleSubmit}>
             { FORM_LIST.map(item => (
                 <FormInput 
+                    key={item.id}
                     label={item.label}
                     type={item.type}
                     value={getter[item.id]}
@@ -31,7 +47,7 @@ const AddCourse = (props) => {
                 />
             )) }
             <ButtonGroup>
-                <Button variant='success'>
+                <Button variant='success' type='submit'>
                     Submit
                 </Button>
                 <Button variant='secondary' onClick={() => props.onNavigate("/")}>
