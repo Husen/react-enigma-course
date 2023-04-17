@@ -1,42 +1,51 @@
 import React from 'react';
 import './App.css';
 import {AddCourse, CourseList} from './pagess';
-import courseList from './fixtures/courseList.json';
-function App() {
-    const [courses, setCourses] = React.useState(courseList);
-    const [nav, setNav] = React.useState("/");
-    let Component;
-    let props = {};
 
-    switch (nav) {
-        case "/":
-            Component = CourseList;
+const DATA = [
+    {title: "Title 1", description: "des1"},
+    {title: "Title 1", description: "des1"}
+]
+
+
+
+function App() {
+
+    const [screenName, setScreenName] = React.useState('')
+    let ScreenComponent
+    let props = {}
+
+    switch(screenName) {
+        case "course-list":
+            ScreenComponent = CourseList
             props = {
-                ...props,
-                courses
+                courses: DATA
             }
             break;
-        case "/add-course":
-            Component = AddCourse;
+        case "add-course":
+            ScreenComponent = AddCourse
             props = {
-                ...props,
-                setCourses: setCourses
+                courses: DATA
             }
             break;
         default:
-            Component = CourseList;
+            ScreenComponent = CourseList
             props = {
-                ...props,
-                courses
+                courses: DATA
             }
             break;
     }
 
-  return (
-    <div className="App">
-      <Component onNavigate={setNav} {...props} />
-    </div>
-  );
+    const onNavigate = (screenName) => {
+        setScreenName(screenName)
+    }
+    
+    return(
+        <div className='App'>
+            {/* <CourseList courses={DATA} /> */}
+            <ScreenComponent {...props} onNavigate={onNavigate} />
+        </div>
+    )
 }
 
 export default App;

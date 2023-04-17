@@ -1,33 +1,48 @@
 import React from "react";
-import {Button} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 
 import {StyledListGroup, StyledText} from "./styles";
 import CourseItem from "./components/CourseItem";
 
-// import courseList from "../../fixtures/courseList.json";
-import {StyledContainer} from "../../components";
 
-const Empty = () => (
+const EmptyList = () => (
     <StyledText>Data Kosong...</StyledText>
 )
 
-const List = ({data}) => {
+const ListItem = (props) => {
+    const {data} = props
     return (
+
         <StyledListGroup>
-            {data?.map((item, index) => (
-                <CourseItem data={item} key={item?.courseId} />
-            ))}
+            {
+                data.map((course, index) => {
+                    return (
+                        <CourseItem
+                        title={course.title}
+                        description={course.description}
+                        key={index}
+                        />
+                    )
+                })
+            }
         </StyledListGroup>
     )
 }
 
-const CourseList = ({onNavigate, courses}) => {
+const CourseList = (props) => {
+    const {courses, onNavigate} = props
     return (
-        <StyledContainer>
-            <Button variant="success" onClick={() => onNavigate("/add-course")}>Add Course</Button>
-            {courses?.data?.length > 0 ? <List data={courses?.data} /> : <Empty />}
-        </StyledContainer>
+        <>
+            <Container>
+                <h1>Course list page</h1>
+                <Button variant="primary" onClick={() => onNavigate("add-course")}>Add Course</Button>
+                {
+                    courses.length > 0 ? <ListItem data={courses} /> : <EmptyList text="Data masih kosong" />
+                }
+            </Container>
+        </>
     )
 }
+
 
 export default CourseList;

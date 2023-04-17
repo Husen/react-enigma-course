@@ -13,8 +13,9 @@ const FORM_LIST = [
     { id: "duration", label: "Duration", type: "text", placeholder: "Enter course duration" }
 ]
 
-const AddCourse = () => {
+const AddCourse = (props) => {
     const { getter, setter } = useAddCourseState()
+    // const {onNavigate} = props
 
   return (
     <StyledContainer>
@@ -33,7 +34,7 @@ const AddCourse = () => {
                 <Button variant='success'>
                     Submit
                 </Button>
-                <Button variant='secondary'>
+                <Button variant='secondary' onClick={() => props.onNavigate("/")}>
                     Cancel
                 </Button>
             </ButtonGroup>
