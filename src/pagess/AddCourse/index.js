@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, ButtonGroup, Form } from 'react-bootstrap'
 import { StyledContainer, StyledTitle } from './style'
 import FormInput from '../../components/FormInput'
-import useAddCourseState from './useAddCouseState'
+import useAddCourse from './useAddCourse'
 
 const FORM_LIST = [
     { id: "title", label: "TItle", type: "text", placeholder: "Enter course title" },
@@ -13,13 +13,28 @@ const FORM_LIST = [
     { id: "duration", label: "Duration", type: "text", placeholder: "Enter course duration" }
 ]
 
-const AddCourse = () => {
-    const { getter, setter } = useAddCourseState()
+const AddCourse = ({ onNavigate, setCourses }) => {
+    const { getter, setter } = useAddCourse()
+    // const { onNavigate, setCourses } = props
+
+    const handleSubmit = () => {
+        setCourses((prevState) => {
+            const newCourse = {...prevState}
+            const payload = {
+                ...getter,
+                courseId: Math.random().toString()
+            }
+            newCourse?.data?.push(payload)
+            return newCourse
+        })
+
+        onNavigate("/")
+    }
 
   return (
     <StyledContainer>
         <StyledTitle>Add Course</StyledTitle>
-        <Form>
+        <Form onSubmit={handleSubmit}>
             { FORM_LIST.map(item => (
                 <FormInput 
                     label={item.label}
@@ -27,13 +42,14 @@ const AddCourse = () => {
                     value={getter[item.id]}
                     onChange={setter[item.id]}
                     placeholder={item[item.placeholder]}
+                    key={item.id}
                 />
             )) }
             <ButtonGroup>
-                <Button variant='success'>
+                <Button variant='success' type='submit' disabled={getter.isDisable}>
                     Submit
                 </Button>
-                <Button variant='secondary'>
+                <Button variant='secondary' onClick={() => onNavigate("/")}>
                     Cancel
                 </Button>
             </ButtonGroup>

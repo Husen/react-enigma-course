@@ -24,7 +24,7 @@ const List = ({data}) => {
 const CourseList = ({onNavigate, courses}) => {
     return (
         <StyledContainer>
-            <Button variant="success" onClick={() => onNavigate("/add-course")}>Add Course</Button>
+            <Button variant="primary" onClick={() => onNavigate("/add-course")}>Add Course</Button>
             {courses?.data?.length > 0 ? <List data={courses?.data} /> : <Empty />}
         </StyledContainer>
     )
